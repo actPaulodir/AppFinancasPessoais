@@ -16,6 +16,7 @@ dependencies:
   collection: ^1.19.1
   data_table_2: 2.5.10
   dropdown_button2: 2.3.9
+  file_picker: 9.0.1
   flutter_animate: 4.5.0
   flutter_cache_manager: 3.4.1
   font_awesome_flutter: 10.7.0
@@ -26,7 +27,10 @@ dependencies:
   gotrue: 2.8.4
   hive: 2.2.3
   intl: 0.19.0
+  image_picker: 1.1.2
   json_path: 0.7.2
+  map_launcher: 3.5.0
+  mime_type: 1.0.1
   page_transition: 2.1.0
   path_provider: 2.1.4
   path_provider_android: 2.2.10
@@ -62,6 +66,7 @@ dependencies:
   url_launcher_platform_interface: 2.3.2
   url_launcher_web: 2.3.3
   url_launcher_windows: 3.1.2
+  video_player: 2.9.3
   webview_flutter: 4.9.0
   webview_flutter_android: 3.16.7
   webview_flutter_platform_interface: 2.10.0
@@ -81,4 +86,3 @@ flutter:
     - assets/audios/
     - assets/rive_animations/
     - assets/pdfs/
-    - assets/jsons/

@@ -6,5 +6,5 @@ export 'row.dart';
 export 'table.dart';
 
 // Add tables here
-export 'tables/my_table.dart';
-export 'tables/my_second_table.dart';
+export 'tables/usuarios.dart';
+export 'tables/registros.dart';
