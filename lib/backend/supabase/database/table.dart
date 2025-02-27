@@ -1,6 +1,6 @@
 import 'database.dart';
 
-abstract class SupabaseTable<T extends SupabaseDataRow> {
+abstract class SupabaseTable<T extends SupabaseDataRow>  {
   String get tableName;
   T createRow(Map<String, dynamic> data);
 
@@ -37,7 +37,7 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
   Future<List<T>> update({
     required Map<String, dynamic> data,
     required PostgrestTransformBuilder Function(PostgrestFilterBuilder)
-        matchingRows,
+    matchingRows,
     bool returnRows = false,
   }) async {
     final update = matchingRows(SupaFlow.client.from(tableName).update(data));
@@ -50,7 +50,7 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
 
   Future<List<T>> delete({
     required PostgrestTransformBuilder Function(PostgrestFilterBuilder)
-        matchingRows,
+    matchingRows,
     bool returnRows = false,
   }) async {
     final delete = matchingRows(SupaFlow.client.from(tableName).delete());

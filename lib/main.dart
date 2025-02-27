@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'auth/supabase_auth/supabase_user_provider.dart';
@@ -54,14 +55,14 @@ class _MyAppState extends State<MyApp> {
     jwtTokenStream.listen((_) {});
     Future.delayed(
       const Duration(milliseconds: 1000),
-          () => _appStateNotifier.stopShowingSplashImage(),
+      () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
-    _themeMode = mode;
-    FlutterFlowTheme.saveThemeMode(mode);
-  });
+        _themeMode = mode;
+        FlutterFlowTheme.saveThemeMode(mode);
+      });
 
   @override
   Widget build(BuildContext context) {

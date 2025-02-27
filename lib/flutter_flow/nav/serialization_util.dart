@@ -31,51 +31,53 @@ String uploadedFileToString(FFUploadedFile uploadedFile) =>
 
 String? serializeParam(
   dynamic param,
-  ParamType paramType, [
+  ParamType paramType, {
   bool isList = false,
-]) {
+}) {
   try {
     if (param == null) {
       return null;
     }
     if (isList) {
       final serializedValues = (param as Iterable)
-          .map((p) => serializeParam(p, paramType, false))
+          .map((p) => serializeParam(p, paramType, isList: false))
           .where((p) => p != null)
           .map((p) => p!)
           .toList();
       return json.encode(serializedValues);
     }
+    String? data;
     switch (paramType) {
       case ParamType.int:
-        return param.toString();
+        data = param.toString();
       case ParamType.double:
-        return param.toString();
+        data = param.toString();
       case ParamType.String:
-        return param;
+        data = param;
       case ParamType.bool:
-        return param ? 'true' : 'false';
+        data = param ? 'true' : 'false';
       case ParamType.DateTime:
-        return (param as DateTime).millisecondsSinceEpoch.toString();
+        data = (param as DateTime).millisecondsSinceEpoch.toString();
       case ParamType.DateTimeRange:
-        return dateTimeRangeToString(param as DateTimeRange);
+        data = dateTimeRangeToString(param as DateTimeRange);
       case ParamType.LatLng:
-        return (param as LatLng).serialize();
+        data = (param as LatLng).serialize();
       case ParamType.Color:
-        return (param as Color).toCssString();
+        data = (param as Color).toCssString();
       case ParamType.FFPlace:
-        return placeToString(param as FFPlace);
+        data = placeToString(param as FFPlace);
       case ParamType.FFUploadedFile:
-        return uploadedFileToString(param as FFUploadedFile);
+        data = uploadedFileToString(param as FFUploadedFile);
       case ParamType.JSON:
-        return json.encode(param);
+        data = json.encode(param);
 
       case ParamType.SupabaseRow:
         return json.encode((param as SupabaseDataRow).data);
 
       default:
-        return null;
+        data = null;
     }
+    return data;
   } catch (e) {
     print('Error serializing parameter: $e');
     return null;
@@ -203,28 +205,10 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
-          case AuthUsersRow:
-            return AuthUsersRow(data);
-          case LoanersRow:
-            return LoanersRow(data);
-          case CommentsRow:
-            return CommentsRow(data);
-          case ItemLisRow:
-            return ItemLisRow(data);
-          case ItemCatalogRow:
-            return ItemCatalogRow(data);
-          case WorkOrdersRow:
-            return WorkOrdersRow(data);
-          case TicketsRow:
-            return TicketsRow(data);
-          case EqptWoLisRow:
-            return EqptWoLisRow(data);
-          case EquipmentRow:
-            return EquipmentRow(data);
-          case UsersRow:
-            return UsersRow(data);
-          case CustomersRow:
-            return CustomersRow(data);
+          case PostsRow:
+            return PostsRow(data);
+          case UserprofileRow:
+            return UserprofileRow(data);
           default:
             return null;
         }
