@@ -1,24 +1,35 @@
 import '/auth/supabase_auth/auth_util.dart';
+//import '/backend/supabase/supabase.dart'
+import '/components/aviso_pagamento_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
+import 'dart:ui';
+//import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'auth1_model.dart';
-export 'auth1_model.dart';
+//import 'package:provider/provider.dart';
 
-class Auth1Widget extends StatefulWidget {
-  const Auth1Widget({super.key});
+import 'login_cadastro_model.dart';
+export 'login_cadastro_model.dart';
+
+class LoginCadastroWidget extends StatefulWidget {
+  const LoginCadastroWidget({super.key});
+
+  static String routeName = 'LoginCadastro';
+  static String routePath = '/loginCadastro';
 
   @override
-  State<Auth1Widget> createState() => _Auth1WidgetState();
+  State<LoginCadastroWidget> createState() => _LoginCadastroWidgetState();
 }
 
-class _Auth1WidgetState extends State<Auth1Widget>
+class _LoginCadastroWidgetState extends State<LoginCadastroWidget>
     with TickerProviderStateMixin {
-  late Auth1Model _model;
+  late LoginCadastroModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,7 +38,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => Auth1Model());
+    _model = createModel(context, () => LoginCadastroModel());
 
     _model.tabBarController = TabController(
       vsync: this,
