@@ -73,13 +73,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const Auth1Widget(),
+          appStateNotifier.loggedIn ? const HomePageWidget() : const LoginCadastroWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomePageWidget() : const Auth1Widget(),
+              appStateNotifier.loggedIn ? const HomePageWidget() : const LoginCadastroWidget(),
         ),
         FFRoute(
           name: 'HomePage',
@@ -89,7 +89,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Auth1',
           path: '/auth1',
-          builder: (context, params) => const Auth1Widget(),
+          builder: (context, params) => const LoginCadastroWidget(),
         ),
         FFRoute(
           name: 'Profile09',
