@@ -56,6 +56,29 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
   }
 
   @override
+  Future updatePassword({
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+    try {
+      if (!loggedIn) {
+        print('Error: update password attempted with no logged in user!');
+        return;
+      }
+      await currentUser?.updatePassword(newPassword);
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.message}')),
+      );
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Password updated successfully')),
+    );
+  }
+
+  @override
   Future resetPassword({
     required String email,
     required BuildContext context,
@@ -96,7 +119,7 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
         () => emailCreateAccountFunc(email, password),
       );
 
-  /// Tries to sign in or create an account using Firebase Auth.
+  /// Tries to sign in or create an account using Supabase Auth.
   /// Returns the User object if sign in was successful.
   Future<BaseAuthUser?> _signInOrCreateAccount(
     BuildContext context,
@@ -104,8 +127,8 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
   ) async {
     try {
       final user = await signInFunc();
-      final authUser = user == null ? null : SupabaseAuthTestSupabaseUser(user);
-      print('usuario-paulodir');print(user);
+      final authUser = user == null ? null : FlutterAppSupabaseUser(user);
+
       // Update currentUser here in case user info needs to be used immediately
       // after a user is signed in. This should be handled by the user stream,
       // but adding here too in case of a race condition where the user stream
@@ -116,7 +139,7 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       return authUser;
     } on AuthException catch (e) {
-      final errorMsg = e.message.contains('User already registered') ?? false
+      final errorMsg = e.message.contains('User already registered')
           ? 'Error: The email is already in use by a different account'
           : 'Error: ${e.message}';
       ScaffoldMessenger.of(context).hideCurrentSnackBar();

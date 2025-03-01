@@ -5,8 +5,8 @@ import '../base_auth_user_provider.dart';
 
 export '../base_auth_user_provider.dart';
 
-class SupabaseAuthTestSupabaseUser extends BaseAuthUser {
-  SupabaseAuthTestSupabaseUser(this.user);
+class FlutterAppSupabaseUser extends BaseAuthUser {
+  FlutterAppSupabaseUser(this.user);
   User? user;
   @override
   bool get loggedIn => user != null;
@@ -26,6 +26,16 @@ class SupabaseAuthTestSupabaseUser extends BaseAuthUser {
   Future? updateEmail(String email) async {
     final response =
         await SupaFlow.client.auth.updateUser(UserAttributes(email: email));
+    if (response.user != null) {
+      user = response.user;
+    }
+  }
+
+  @override
+  Future? updatePassword(String newPassword) async {
+    final response = await SupaFlow.client.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
     if (response.user != null) {
       user = response.user;
     }
@@ -57,7 +67,7 @@ class SupabaseAuthTestSupabaseUser extends BaseAuthUser {
 /// [SupaFlow.client.auth.onAuthStateChange] does not yield any values until the
 /// user is already authenticated. So we add a default null user to the stream,
 /// if we need to interact with the [currentUser] before logging in.
-Stream<BaseAuthUser> supabaseAuthTestSupabaseUserStream() {
+Stream<BaseAuthUser> FlutterAppSupabaseUserStream() {
   final supabaseAuthStream = SupaFlow.client.auth.onAuthStateChange.debounce(
       (authState) => authState.event == AuthChangeEvent.tokenRefreshed
           ? TimerStream(authState, const Duration(seconds: 1))
@@ -67,7 +77,7 @@ Stream<BaseAuthUser> supabaseAuthTestSupabaseUserStream() {
           : supabaseAuthStream)
       .map<BaseAuthUser>(
     (authState) {
-      currentUser = SupabaseAuthTestSupabaseUser(authState?.session?.user);
+      currentUser = FlutterAppSupabaseUser(authState?.session?.user);
       return currentUser!;
     },
   );

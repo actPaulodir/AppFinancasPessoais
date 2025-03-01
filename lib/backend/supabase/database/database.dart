@@ -5,5 +5,6 @@ export '../supabase.dart';
 export 'row.dart';
 export 'table.dart';
 
-export 'tables/posts.dart';
-export 'tables/userprofile.dart';
+// Add tables here
+export 'tables/my_table.dart';
+export 'tables/my_second_table.dart';
