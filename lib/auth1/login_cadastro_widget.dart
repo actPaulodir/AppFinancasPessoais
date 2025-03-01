@@ -6,8 +6,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'auth1_model.dart';
-export 'auth1_model.dart';
+import 'login_cadastro_model.dart';
+export 'login_cadastro_model.dart';
 
 class LoginCadastroWidget extends StatefulWidget {
   const LoginCadastroWidget({super.key});
