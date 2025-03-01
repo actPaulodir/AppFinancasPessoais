@@ -9,16 +9,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'auth1_model.dart';
 export 'auth1_model.dart';
 
-class Auth1Widget extends StatefulWidget {
-  const Auth1Widget({super.key});
+class LoginCadastroWidget extends StatefulWidget {
+  const LoginCadastroWidget({super.key});
 
   @override
-  State<Auth1Widget> createState() => _Auth1WidgetState();
+  State<LoginCadastroWidget> createState() => _LoginCadastroWidgetState();
 }
 
-class _Auth1WidgetState extends State<Auth1Widget>
+class _LoginCadastroWidgetState extends State<LoginCadastroWidget>
     with TickerProviderStateMixin {
-  late Auth1Model _model;
+  late LoginCadastroModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,7 +27,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => Auth1Model());
+    _model = createModel(context, () => LoginCadastroModel());
 
     _model.tabBarController = TabController(
       vsync: this,

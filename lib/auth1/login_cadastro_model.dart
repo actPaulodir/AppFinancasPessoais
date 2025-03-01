@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'auth1_widget.dart' show Auth1Widget;
+import 'auth1_widget.dart' show LoginCadastroWidget;
 import 'package:flutter/material.dart';
 
-class Auth1Model extends FlutterFlowModel<Auth1Widget> {
+class LoginCadastroModel extends FlutterFlowModel<LoginCadastroWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TabBar widget.
