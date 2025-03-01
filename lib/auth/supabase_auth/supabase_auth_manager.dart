@@ -104,8 +104,8 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
   ) async {
     try {
       final user = await signInFunc();
-      final authUser = user == null ? null : SupabaseAuthTestSupabaseUser(user);
-      print('usuario-paulodir');print(user);
+      final authUser = user == null ? null : TicketsagentSupabaseUser(user);
+
       // Update currentUser here in case user info needs to be used immediately
       // after a user is signed in. This should be handled by the user stream,
       // but adding here too in case of a race condition where the user stream

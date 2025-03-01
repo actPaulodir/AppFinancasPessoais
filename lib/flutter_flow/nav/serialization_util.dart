@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:from_css_color/from_css_color.dart';
+
+import '/backend/schema/structs/index.dart';
 
 import '/backend/supabase/supabase.dart';
 
@@ -70,6 +71,9 @@ String? serializeParam(
         data = uploadedFileToString(param as FFUploadedFile);
       case ParamType.JSON:
         data = json.encode(param);
+
+      case ParamType.DataStruct:
+        data = param is BaseStruct ? param.serialize() : null;
 
       case ParamType.SupabaseRow:
         return json.encode((param as SupabaseDataRow).data);
@@ -150,14 +154,16 @@ enum ParamType {
   FFUploadedFile,
   JSON,
 
+  DataStruct,
   SupabaseRow,
 }
 
 dynamic deserializeParam<T>(
   String? param,
   ParamType paramType,
-  bool isList,
-) {
+  bool isList, {
+  StructBuilder<T>? structBuilder,
+}) {
   try {
     if (param == null) {
       return null;
@@ -170,7 +176,12 @@ dynamic deserializeParam<T>(
       return paramValues
           .whereType<String>()
           .map((p) => p)
-          .map((p) => deserializeParam<T>(p, paramType, false))
+          .map((p) => deserializeParam<T>(
+                p,
+                paramType,
+                false,
+                structBuilder: structBuilder,
+              ))
           .where((p) => p != null)
           .map((p) => p! as T)
           .toList();
@@ -205,13 +216,89 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
-          case PostsRow:
-            return PostsRow(data);
-          case UserprofileRow:
-            return UserprofileRow(data);
+          case FeedIntelipostRow:
+            return FeedIntelipostRow(data);
+          case SuporteLogisticaRow:
+            return SuporteLogisticaRow(data);
+          case CodesCrmRow:
+            return CodesCrmRow(data);
+          case AtividadesComUsuarioRow:
+            return AtividadesComUsuarioRow(data);
+          case VNotificacoesDetalhadasRow:
+            return VNotificacoesDetalhadasRow(data);
+          case TesteRow:
+            return TesteRow(data);
+          case TotalSalesViewRow:
+            return TotalSalesViewRow(data);
+          case UserByanaRow:
+            return UserByanaRow(data);
+          case CredenciaisRow:
+            return CredenciaisRow(data);
+          case SuporteTRow:
+            return SuporteTRow(data);
+          case ProdutosV2Row:
+            return ProdutosV2Row(data);
+          case ComentariosTicketsRow:
+            return ComentariosTicketsRow(data);
+          case FollowUpPedidosRow:
+            return FollowUpPedidosRow(data);
+          case ContatosByanaRow:
+            return ContatosByanaRow(data);
+          case VendasPromotorRow:
+            return VendasPromotorRow(data);
+          case NotificacoesRow:
+            return NotificacoesRow(data);
+          case AtividadesRow:
+            return AtividadesRow(data);
+          case SuporteLogisticaComUsuariosRow:
+            return SuporteLogisticaComUsuariosRow(data);
+          case PedidosYampiV2Row:
+            return PedidosYampiV2Row(data);
+          case Clientesv2Row:
+            return Clientesv2Row(data);
+          case CancelamentoEstornoRow:
+            return CancelamentoEstornoRow(data);
+          case UserTtRow:
+            return UserTtRow(data);
+          case ClientesExataRow:
+            return ClientesExataRow(data);
+          case VendedoresMercosRow:
+            return VendedoresMercosRow(data);
+          case LojasRow:
+            return LojasRow(data);
+          case ProdutosRow:
+            return ProdutosRow(data);
+          case ViewPedidosResumoRow:
+            return ViewPedidosResumoRow(data);
+          case MensagemTemplateRow:
+            return MensagemTemplateRow(data);
+          case ChatByanaRow:
+            return ChatByanaRow(data);
+          case UsuariosRow:
+            return UsuariosRow(data);
+          case ViewPedidosClienteRow:
+            return ViewPedidosClienteRow(data);
+          case VendedoresRow:
+            return VendedoresRow(data);
+          case OrdersTrackingRow:
+            return OrdersTrackingRow(data);
+          case NotasFiscaisRow:
+            return NotasFiscaisRow(data);
+          case PedidosExataRow:
+            return PedidosExataRow(data);
+          case Contatov5Row:
+            return Contatov5Row(data);
+          case OrdersRow:
+            return OrdersRow(data);
+          case ComentariosTicketsLogisticaRow:
+            return ComentariosTicketsLogisticaRow(data);
           default:
             return null;
         }
+
+      case ParamType.DataStruct:
+        final data = json.decode(param) as Map<String, dynamic>? ?? {};
+        return structBuilder != null ? structBuilder(data) : null;
 
       default:
         return null;

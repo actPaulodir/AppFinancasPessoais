@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+
+import '/backend/schema/structs/index.dart';
 
 
 import '/auth/base_auth_user_provider.dart';
@@ -73,38 +76,237 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const LoginCadastroWidget(),
+          appStateNotifier.loggedIn ? const HomeWidget() : const LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomePageWidget() : const LoginCadastroWidget(),
+              appStateNotifier.loggedIn ? const HomeWidget() : const LoginWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => const HomePageWidget(),
+          name: 'login',
+          path: '/login',
+          builder: (context, params) => const LoginWidget(),
         ),
         FFRoute(
-          name: 'Auth1',
-          path: '/auth1',
-          builder: (context, params) => const LoginCadastroWidget(),
+          name: 'cadastro',
+          path: '/cadastro',
+          builder: (context, params) => const CadastroWidget(),
         ),
         FFRoute(
-          name: 'Profile09',
-          path: '/profile09',
-          builder: (context, params) => const Profile09Widget(),
+          name: 'detalhePedido',
+          path: '/detalhePedido',
+          requireAuth: true,
+          builder: (context, params) => DetalhePedidoWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'Onboarding02',
-          path: '/onboarding02',
-          builder: (context, params) => const Onboarding02Widget(),
+          name: 'detlhesClientes',
+          path: '/detlhesClientes',
+          requireAuth: true,
+          builder: (context, params) => DetlhesClientesWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'Product8',
-          path: '/product8',
-          builder: (context, params) => const Product8Widget(),
+          name: 'tickets',
+          path: '/tickets',
+          requireAuth: true,
+          builder: (context, params) => TicketsWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'detalheTicket',
+          path: '/detalheTicket',
+          requireAuth: true,
+          builder: (context, params) => DetalheTicketWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'detalheTicketLogistica',
+          path: '/detalheTicketLogistica',
+          requireAuth: true,
+          builder: (context, params) => DetalheTicketLogisticaWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+            vinculado: params.getParam(
+              'vinculado',
+              ParamType.bool,
+            ),
+            idTicket: params.getParam(
+              'idTicket',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'ticketLogistica',
+          path: '/ticketLogistica',
+          requireAuth: true,
+          builder: (context, params) => TicketLogisticaWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'ticketsGeral',
+          path: '/ticketsGeral',
+          requireAuth: true,
+          builder: (context, params) => const TicketsGeralWidget(),
+        ),
+        FFRoute(
+          name: 'minhasAtividades',
+          path: '/minhasAtividades',
+          requireAuth: true,
+          builder: (context, params) => const MinhasAtividadesWidget(),
+        ),
+        FFRoute(
+          name: 'ticketsLogisticaGeral',
+          path: '/ticketsLogisticaGeral',
+          requireAuth: true,
+          builder: (context, params) => const TicketsLogisticaGeralWidget(),
+        ),
+        FFRoute(
+          name: 'home',
+          path: '/home',
+          requireAuth: true,
+          builder: (context, params) => const HomeWidget(),
+        ),
+        FFRoute(
+          name: 'clientes',
+          path: '/clientes',
+          requireAuth: true,
+          builder: (context, params) => const ClientesWidget(),
+        ),
+        FFRoute(
+          name: 'usuarios',
+          path: '/usuarios',
+          requireAuth: true,
+          builder: (context, params) => const UsuariosWidget(),
+        ),
+        FFRoute(
+          name: 'alterarSenha',
+          path: '/alterarSenha',
+          requireAuth: true,
+          builder: (context, params) => const AlterarSenhaWidget(),
+        ),
+        FFRoute(
+          name: 'redefinirSenha',
+          path: '/redefinirSenha',
+          builder: (context, params) => const RedefinirSenhaWidget(),
+        ),
+        FFRoute(
+          name: 'cancelamentos',
+          path: '/cancelamentos1',
+          requireAuth: true,
+          builder: (context, params) => CancelamentosWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'detalheCancelamento',
+          path: '/detalheCancelamento',
+          requireAuth: true,
+          builder: (context, params) => DetalheCancelamentoWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'cancelamentosGeral',
+          path: '/cancelamentosGeral',
+          requireAuth: true,
+          builder: (context, params) => const CancelamentosGeralWidget(),
+        ),
+        FFRoute(
+          name: 'detalhePedidoCopy',
+          path: '/detalhePedidoCopy',
+          requireAuth: true,
+          builder: (context, params) => DetalhePedidoCopyWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'detalhePedidoCopy2',
+          path: '/detalhePedidocopy2',
+          requireAuth: true,
+          builder: (context, params) => DetalhePedidoCopy2Widget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'pedidos',
+          path: '/pedidos',
+          requireAuth: true,
+          builder: (context, params) => PedidosWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'pedidosGeral',
+          path: '/pedidosGeral',
+          requireAuth: true,
+          builder: (context, params) => const PedidosGeralWidget(),
+        ),
+        FFRoute(
+          name: 'detalhePedidoExata',
+          path: '/detalhePedidoExata',
+          requireAuth: true,
+          builder: (context, params) => DetalhePedidoExataWidget(
+            id: params.getParam(
+              'id',
+              ParamType.int,
+            ),
+            data: params.getParam(
+              'data',
+              ParamType.DateTime,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'pedidosCopy',
+          path: '/pedidosCOPY',
+          requireAuth: true,
+          builder: (context, params) => PedidosCopyWidget(
+            cpf: params.getParam(
+              'cpf',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -223,6 +425,7 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -240,6 +443,7 @@ class FFParameters {
       param,
       type,
       isList,
+      structBuilder: structBuilder,
     );
   }
 }
@@ -273,7 +477,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/auth1';
+            return '/login';
           }
           return null;
         },
@@ -291,10 +495,9 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+                    child: SpinKitChasingDots(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 50.0,
                     ),
                   ),
                 )
