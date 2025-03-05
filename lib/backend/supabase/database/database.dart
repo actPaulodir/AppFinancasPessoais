@@ -7,3 +7,6 @@ export 'table.dart';
 
 export 'tables/posts.dart';
 export 'tables/userprofile.dart';
+export 'tables/usuarios.dart';
+export 'tables/registros.dart';
+export 'tables/view_saldofinal.dart';
