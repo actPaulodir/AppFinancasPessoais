@@ -79,7 +79,7 @@ String? serializeParam(
     }
     return data;
   } catch (e) {
-    print('Error serializing parameter: $e');
+    print('1 Error serializing parameter: $e');
     return null;
   }
 }
@@ -205,8 +205,12 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
-          case PostsRow:
-            return PostsRow(data);
+          case ViewSaldofinalRow:
+            return ViewSaldofinalRow(data);
+          case UsuariosRow:
+            return UsuariosRow(data);
+          case RegistrosRow:
+            return RegistrosRow(data);
           case UserprofileRow:
             return UserprofileRow(data);
           default:
